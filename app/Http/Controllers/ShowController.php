@@ -15,7 +15,7 @@ class ShowController extends Controller
      */
     public function index()
     {
-        $response = Http::get('https://www.ivi.ru/movies/thriller/page33', [
+        $response = Http::get('https://www.ivi.ru/movies/thriller', [
             //'_' => '_',
         ]);
         

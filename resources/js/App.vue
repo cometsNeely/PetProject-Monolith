@@ -1,32 +1,18 @@
 <script setup>
-import { ref } from 'vue'
-import axios from 'axios'
-
-const shows = ref([])
-
-axios.defaults.baseURL = 'http://localhost:80/api/';
-
-axios
-    .get('/shows')
-    .then(response => { 
-
-      console.log(response.data.shows)
-
-      response.data.shows.forEach(element => {
-        element.forEach(elementInside => {
-          shows.value.push(elementInside)
-        });
-      });
-
-    })
-    .catch(error => {
-     console.log('Error:', error);
-});
-
+	import Header from './src/components/Header.vue';
 </script>
 
 <template>
-  <div v-for="(show, index) in shows">
-    {{ index+1 }}: {{ show }} 
-  </div>
+  <Header />
+  <main class="main">
+	<router-view />
+  </main>
 </template>
+
+<style scoped>
+	.main {
+		width: 992px;
+		margin: 0 auto;
+		padding: 40px;
+	}
+</style>
