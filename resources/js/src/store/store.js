@@ -3,14 +3,24 @@ import { createStore } from 'vuex';
 const store = createStore({
 	state() {
 		return {
-			//count: 0,
+			count: 1,
 		};
 	},
-	/*mutations: {
-		increment(state) {
-			state.count++;
-		},
-	},*/
+    getters: {
+        doubleCount(state) {
+            return state.count*2
+        }
+    },
+    mutations: {
+        incrementCount(state, newCount) {
+            state.count = newCount;
+        }
+    },
+    actions: {
+        getCount({ state, commit, getters }) {
+            commit('incrementCount', 5)
+        }
+    },
 });
 
 export default store;
