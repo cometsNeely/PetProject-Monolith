@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreShowRequest;
 use App\Http\Requests\UpdateShowRequest;
 use App\Models\Show;
+use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Http;
 
@@ -13,9 +14,10 @@ class ShowController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $response = Http::get('https://www.ivi.ru/movies/thriller', [
+
+        $response = Http::get('https://www.ivi.ru/movies'.$request->path, [
             //'_' => '_',
         ]);
         
@@ -25,7 +27,7 @@ class ShowController extends Controller
 
             for($i = 2; $i <= 100; $i ++) {
 
-                $response = Http::get('https://www.ivi.ru/movies/thriller'.'/page'.$i, [
+                $response = Http::get('https://www.ivi.ru/movies'.$request->path.'/page'.$i, [
                     //'_' => '_',
                 ]);
 

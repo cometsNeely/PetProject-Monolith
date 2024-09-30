@@ -1,6 +1,12 @@
 import { createStore } from 'vuex';
+//import module
 
 const store = createStore({
+
+    modules: {
+        //object: module
+    },
+
 	state() {
 		return {
 			count: 1,

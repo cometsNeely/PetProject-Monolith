@@ -2,4 +2,4 @@
 
 use App\Http\Controllers\ShowController;
 
-Route::get('/shows', [ShowController::class, 'index']);
+Route::post('/shows', [ShowController::class, 'index']);
