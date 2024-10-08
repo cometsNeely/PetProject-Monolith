@@ -14,8 +14,9 @@ return new class extends Migration
         Schema::create('shows', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('description');
-            $table->float('rating');
+            $table->string('description')->default('');
+            $table->string('category')->default('');
+            $table->float('rating')->default(0);
             $table->timestamps();
         });
     }

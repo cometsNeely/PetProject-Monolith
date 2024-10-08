@@ -4,49 +4,38 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreShowRequest;
 use App\Http\Requests\UpdateShowRequest;
-use App\Models\Show;
 use Illuminate\Http\Request;
-
+use App\Facades\IviJobFacade;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\DB;
+use App\Models\Show;
+
+use Illuminate\Queue\Middleware\Skip;
 
 class ShowController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request)
     {
 
-        $response = Http::get('https://www.ivi.ru/movies'.$request->path, [
-            //'_' => '_',
-        ]);
-        
-        preg_match_all('/<span class="nbl-slimPosterBlock__titleText">(.*?)<\/span>/', $response, $match);
+        DB::table('jobs')->delete();
 
-        $resultArray = [$match[1]];
+        $shows = Show::where('category', preg_replace('/[^A-Za-z0-9\-]/', '', $request->path))->get();
+    
 
-            for($i = 2; $i <= 100; $i ++) {
+        if (count($shows) > 0) {
 
-                $response = Http::get('https://www.ivi.ru/movies'.$request->path.'/page'.$i, [
-                    //'_' => '_',
-                ]);
+            return response()->json(['shows' => Show::where('category', preg_replace('/[^A-Za-z0-9\-]/', '', $request->path))->get()]);
 
-                if($response && $response->status() === 200) {
+        }
+        else {
 
-                    preg_match_all('/<span class="nbl-slimPosterBlock__titleText">(.*?)<\/span>/', $response, $match1);
+            IviJobFacade::dispatch($request->path);
 
-                    // Если пытаемся получить доступ к undefined странице
-                    if ($resultArray[0] == $match1[1]) {
-                        break;
-                    }
-
-                    array_push($resultArray, $match1[1]);
-                    
-                }
-
-            }
-
-        return response()->json(['shows' => $resultArray]);
+        }
 
     }
 
