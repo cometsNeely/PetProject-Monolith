@@ -9,22 +9,24 @@ const store = createStore({
 
 	state() {
 		return {
-			count: 1,
+			message: '',
+            errors: null
 		};
 	},
     getters: {
-        doubleCount(state) {
+        /*doubleCount(state) {
             return state.count*2
-        }
+        }*/
     },
     mutations: {
-        incrementCount(state, newCount) {
-            state.count = newCount;
+        defaultDataParamsMsgErrs(state, newParamMsg, newParamErrs) {
+            state.message = newParamMsg
+            state.errors = newParamErrs
         }
     },
     actions: {
-        getCount({ state, commit, getters }) {
-            commit('incrementCount', 5)
+        getNewParamsMsgErrs({ state, commit, getters }) {
+            commit('defaultDataParamsMsgErrs', '', null)
         }
     },
 });

@@ -35,8 +35,7 @@ class IviService {
 
                     foreach($match[1] as $result){        
 
-                        $res = Show::create(['name' => $result, 'category' => preg_replace('/[^A-Za-z0-9\-]/', '', $path)]);
-
+                        Show::create(['name' => $result, 'category' => preg_replace('/[^A-Za-z0-9\-]/', '', $path)]);
                         //ShowsDoneEvent::dispatch(ShowResource::make($res), preg_replace('/[^A-Za-z0-9\-]/', '', $path));
                 
                     }
