@@ -46,7 +46,7 @@ onMounted(() => {
 
   if (store.state.message.message !== '' || store.state.errors !== null) {
       
-      store.commit('getNewParamsMsgErrs')
+      store.dispatch('getNewParamsMsgErrs')
 
   }
 

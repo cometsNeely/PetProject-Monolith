@@ -2,6 +2,9 @@
 
 import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
+
+const store = useStore()
 
 const router = useRouter()
 
@@ -9,7 +12,7 @@ const logout = async () => {
 
 	try {
     await axios.post('/logout').then(res => {
-		store.commit('getNewParamsMsgErrs')
+		store.dispatch('getNewParamsMsgErrs')
     })
   	} catch (error) {
     	console.log('Error:', error);

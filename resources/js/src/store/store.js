@@ -10,7 +10,8 @@ const store = createStore({
 	state() {
 		return {
 			message: '',
-            errors: null
+            errors: null,
+            shows: [],
 		};
 	},
     getters: {
@@ -22,12 +23,19 @@ const store = createStore({
         defaultDataParamsMsgErrs(state, newParamMsg, newParamErrs) {
             state.message = newParamMsg
             state.errors = newParamErrs
-        }
+        },
+
+        addDataToShows(state, newParams) {
+
+            state.shows.push( { 'show': newParams.show, 'category': newParams.category } )
+
+        },
+
     },
     actions: {
         getNewParamsMsgErrs({ state, commit, getters }) {
             commit('defaultDataParamsMsgErrs', '', null)
-        }
+        },
     },
 });
 

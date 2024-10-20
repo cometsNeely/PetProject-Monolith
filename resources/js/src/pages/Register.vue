@@ -56,7 +56,7 @@
 
     if (store.state.message !== '' || store.state.errors !== null) {
       
-      store.commit('getNewParamsMsgErrs')
+      store.dispatch('getNewParamsMsgErrs')
 
     }
 

@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Bus\Batchable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
@@ -11,7 +12,7 @@ use App\Facades\IviFacade;
 
 class IviParseJob implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels, Batchable;
 
     private $path;
 
@@ -20,7 +21,9 @@ class IviParseJob implements ShouldQueue
      */
     public function __construct($path='')
     {
+
         $this->path = $path;
+        
     }
 
     /**

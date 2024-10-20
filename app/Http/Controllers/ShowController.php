@@ -9,8 +9,9 @@ use App\Facades\IviJobFacade;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\DB;
 use App\Models\Show;
-
-use Illuminate\Queue\Middleware\Skip;
+use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Queue;
 
 class ShowController extends Controller
 {
@@ -21,20 +22,10 @@ class ShowController extends Controller
     public function index(Request $request)
     {
 
-        DB::table('jobs')->delete();
+        if(Queue::size(preg_replace('/[^A-Za-z0-9\-]/', '', $request->path)) === 0) {
 
-        $shows = Show::where('category', preg_replace('/[^A-Za-z0-9\-]/', '', $request->path))->get();
-    
-
-        if (count($shows) > 0) {
-
-            return response()->json(['shows' => Show::where('category', preg_replace('/[^A-Za-z0-9\-]/', '', $request->path))->get()]);
-
-        }
-        else {
-
-            IviJobFacade::dispatch($request->path);
-
+            IviJobFacade::dispatch($request->path)->onQueue(preg_replace('/[^A-Za-z0-9\-]/', '', $request->path)); 
+       
         }
 
     }
