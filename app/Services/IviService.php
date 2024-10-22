@@ -49,7 +49,7 @@ class IviService {
 
                             Redis::set(preg_replace('/[^A-Za-z0-9\-]/', '', $path).$result, $result);
                             ShowsDoneEvent::dispatch(preg_replace('/[^A-Za-z0-9\-]/', '', $path), $result);
-
+                            
                         }
 
                         foreach ($keys as $key) {

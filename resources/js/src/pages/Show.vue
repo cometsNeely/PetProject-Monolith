@@ -18,7 +18,7 @@ const getShowData = () => {
   Echo.channel(`shows-channel.${route.path.substring(1)}`)
   .listen('.shows-app', (e) => {
     if(store.state.shows.length > 0) {
-      if(!store.state.shows.some(data => data.show === e.show)){
+      if(!store.state.shows.some(data => data.show === e.show && data.category === e.category)){
         store.commit('addDataToShows', e)    
       }
     } else if (store.state.shows.length === 0) {
@@ -72,7 +72,7 @@ watch(() => route.path,
   </div>
   <div v-for="(show, index) in store.state.shows">
   <div v-if="show.category === route.path">
-    {{ index+1 }}: {{ show.show }} 
+    {{ index+1 }}: {{ show }} 
   </div>
   </div>
   </div>

@@ -33,6 +33,17 @@ services:
       - db
     container_name: app
 
+  supervisor:
+    build:
+      context: .
+      dockerfile: _docker/app/supervisor/Dockerfile
+    volumes:
+      - ./:/var/www
+    depends_on:
+      - app
+    container_name: supervisor
+    # command: supervisord -c /etc/supervisor/supervisord.conf
+
   db:
     image: mysql:8.0
     restart: always
