@@ -14,7 +14,7 @@ RUN apt-get update && apt-get upgrade -y && apt-get install -y supervisor
 RUN mkdir -p "/etc/supervisor/logs"
 
 # Copy the Supervisor configuration file
-COPY ./_docker/app/supervisord.conf /etc/supervisor/supervisord.conf
+COPY ./app-desktop/_docker/app/supervisord.conf /etc/supervisor/supervisord.conf
 
 # Start supervisord
 CMD ["/usr/bin/supervisord", "-n", "-c",  "/etc/supervisor/supervisord.conf"]

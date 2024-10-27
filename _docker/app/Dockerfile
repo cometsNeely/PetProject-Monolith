@@ -14,7 +14,7 @@ RUN apt-get update && apt-get install -y \
       apt-get clean && \
       rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-COPY ./_docker/app/php.ini /usr/local/etc/php/conf.d/php.ini
+COPY ./app-desktop/_docker/app/php.ini /usr/local/etc/php/conf.d/php.ini
 
 # Install composer
 ENV COMPOSER_ALLOW_SUPERUSER=1
@@ -27,9 +27,21 @@ RUN curl -sL https://deb.nodesource.com/setup_12.x | bash -
 RUN apt-get install -y nodejs \
     npm
 
+# Socket extension for work with phpamqplib
+RUN docker-php-ext-install sockets
+
+# Copy package.json and package-lock.json
+COPY ./app-desktop/package*.json ./
+
+# Install project dependencies
+RUN npm install
+
 # Install Redis extension
 RUN pecl install redis \
 && rm -rf /tmp/redis \
 && docker-php-ext-enable redis
 
 WORKDIR /var/www 
+
+# Start the Vite development server
+#CMD ["npm", "run", "dev"]

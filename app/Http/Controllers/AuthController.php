@@ -8,6 +8,8 @@ use App\Http\Requests\UserRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use PhpAmqpLib\Connection\AMQPStreamConnection;
+use PhpAmqpLib\Message\AMQPMessage;
 
 class AuthController extends Controller
 {
@@ -68,4 +70,23 @@ class AuthController extends Controller
         return response(['flag' => 'green', 'message' => 'You`re logout successfully.']);
 
     }
+
+    public function subscribe(Request $request)
+    {
+
+        $connection = new AMQPStreamConnection('rabbitmq', 5672, 'guest', 'guest');
+        $channel = $connection->channel();
+
+        $channel->queue_declare('admin', false, false, false, false);
+
+        $msg = new AMQPMessage($request->payed);
+        $channel->basic_publish($msg, '', 'admin');
+
+            echo " [x] Sent 'Hello World!'\n";
+
+        $channel->close();
+        $connection->close();
+
+    }
+
 }

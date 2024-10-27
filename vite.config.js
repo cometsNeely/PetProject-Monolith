@@ -15,6 +15,7 @@ export default defineConfig({
     ],
     server: {
         hmr: {
+            clientPort: 5173,
             host: 'localhost' // for dev
         }
     },

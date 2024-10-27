@@ -8,7 +8,7 @@ window.axios.defaults.headers.common['Accept'] = 'application/json';
 
 axios.defaults.withCredentials = true;
 axios.defaults.withXSRFToken = true;
-axios.defaults.baseURL = 'http://localhost/api/';
+axios.defaults.baseURL = 'http://localhost:80/api/';
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
